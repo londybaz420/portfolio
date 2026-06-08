@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team-Bandaheali | Contact</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f0f0f; color: white; }
+        .accent-cyan { color: #00f2ea; }
+        .bg-cyan { background-color: #00f2ea; }
+        .border-pink { border-color: #ff0050; }
+    </style>
+</head>
+<body class="font-sans">
+    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
+        <div class="text-2xl font-bold tracking-tighter">TEAM <span class="accent-cyan">BANDAHEALI</span></div>
+        <div class="space-x-6">
+            <a href="/" class="hover:text-[#00f2ea] transition">Home</a>
+            <a href="/contact.html" class="hover:text-[#ff0050] transition">Contact</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto mt-20 px-6">
+        <h1 class="text-5xl font-black mb-10 text-center">Get in <span class="text-[#ff0050]">Touch</span></h1>
+        
+        <form id="contactForm" class="bg-[#1a1a1a] p-8 rounded-2xl border border-gray-800">
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Name</label>
+                <input type="text" id="name" required class="w-full bg-[#0f0f0f] border border-gray-700 rounded-lg p-3 focus:outline-none focus:border-[#00f2ea] text-white">
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Email</label>
+                <input type="email" id="email" required class="w-full bg-[#0f0f0f] border border-gray-700 rounded-lg p-3 focus:outline-none focus:border-[#00f2ea] text-white">
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Message</label>
+                <textarea id="message" required rows="5" class="w-full bg-[#0f0f0f] border border-gray-700 rounded-lg p-3 focus:outline-none focus:border-[#ff0050] text-white"></textarea>
+            </div>
+            <button type="submit" id="submitBtn" class="w-full bg-cyan text-[#0f0f0f] font-bold py-4 rounded-lg hover:opacity-90 transition uppercase tracking-widest">
+                Send Message
+            </button>
+        </form>
+        <p id="responseMsg" class="mt-4 text-center hidden"></p>
+    </main>
+
+    <footer class="mt-20 py-10 border-t border-gray-800 text-center text-gray-500 text-sm">
+        © 2026 Team-Bandaheali. All Rights Reserved.
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('responseMsg');
+            
+            btn.disabled = true;
+            btn.innerText = 'Sending...';
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
+
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await res.json();
+                msg.classList.remove('hidden');
+                if (data.success) {
+                    msg.innerText = '✅ Message sent to Telegram!';
+                    msg.classList.add('text-green-500');
+                    document.getElementById('contactForm').reset();
+                } else {
+                    msg.innerText = '❌ Error sending message.';
+                    msg.classList.add('text-red-500');
+                }
+            } catch (err) {
+                msg.innerText = '❌ Failed to connect to server.';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Send Message';
+            }
+        });
+    </script>
+</body>
+</html>
