@@ -3,86 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Bandaheali | Portfolio</title>
+    <title>Team Bandaheali | Portfolio & Tools</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0f0f0f; color: white; }
+        body { background-color: #0c0c0c; color: white; }
         .tiktok-cyan { color: #00f2ea; }
         .tiktok-pink { color: #ff0050; }
         .bg-tiktok-gradient {
             background: linear-gradient(45deg, #00f2ea, #ff0050);
         }
-        .card:hover { transform: translateY(-5px); transition: 0.3s; }
+        .card:hover { transform: translateY(-8px); transition: 0.4s ease; border-color: #ff0050; }
+        .glass-nav {
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #00f2ea, #ff0050);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 <body class="font-sans">
 
-    <!-- Navbar -->
-    <nav class="p-6 flex justify-between items-center border-b border-gray-800">
-        <h1 class="text-2xl font-bold tracking-tighter">TEAM <span class="tiktok-cyan">BANDA</span><span class="tiktok-pink">HEALI</span></h1>
-        <div class="space-x-6">
-            <a href="/" class="hover:text-cyan-400">Home</a>
-            <a href="#projects" class="hover:text-pink-400">Tools</a>
-            <a href="/contact" class="hover:text-cyan-400">Contact</a>
+    <!-- Navbar with Logo -->
+    <nav class="glass-nav p-4 flex justify-between items-center border-b border-gray-800">
+        <div class="flex items-center gap-3">
+            <img src="https://bandaheali-cdn.koyeb.app/bandaheali/team.jpg" alt="Logo" class="w-10 h-10 rounded-full border-2 border-pink-500 shadow-lg shadow-pink-500/20">
+            <h1 class="text-xl font-bold tracking-tighter hidden sm:block">TEAM <span class="gradient-text">BANDAHEALI</span></h1>
+        </div>
+        <div class="space-x-6 text-sm font-medium">
+            <a href="/" class="hover:tiktok-cyan transition">Home</a>
+            <a href="#tools" class="hover:tiktok-pink transition">Tools</a>
+            <a href="#about" class="hover:tiktok-cyan transition">About Us</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="h-[70vh] flex flex-col justify-center items-center text-center px-4">
-        <h2 class="text-5xl md:text-7xl font-extrabold mb-4">Crafting Digital <span class="tiktok-cyan">Experiences</span></h2>
-        <p class="text-gray-400 text-lg max-w-2xl">We are Team Bandaheali. We specialize in modern web solutions, high-speed tools, and creative digital designs.</p>
-        <div class="mt-8 flex gap-4 flex-wrap justify-center">
-            <a href="/tiktok" class="bg-tiktok-gradient px-8 py-3 rounded-full font-bold hover:opacity-90 flex items-center gap-2">
-                <i class="fab fa-tiktok"></i> TikTok Tool
+    <section class="min-h-[60vh] flex flex-col justify-center items-center text-center px-4 py-20 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]">
+        <div class="mb-6 p-1 bg-gradient-to-r from-cyan-400 to-pink-500 rounded-full">
+             <img src="https://bandaheali-cdn.koyeb.app/bandaheali/team.jpg" alt="Team Bandaheali" class="w-24 h-24 rounded-full border-4 border-black shadow-2xl">
+        </div>
+        <h2 class="text-4xl md:text-7xl font-extrabold mb-4">Allah Aapko <span class="gradient-text">Neki De</span></h2>
+        <p class="text-gray-400 text-lg max-w-2xl mb-8">Welcome to the official hub of Team Bandaheali. We create high-quality social media downloader tools and digital solutions with passion.</p>
+        
+        <div class="flex gap-4 flex-wrap justify-center">
+            <a href="/tiktok" class="bg-tiktok-gradient px-8 py-3 rounded-xl font-bold hover:scale-105 transition flex items-center gap-2 shadow-lg shadow-pink-500/20">
+                <i class="fab fa-tiktok text-black"></i> TikTok Tool
             </a>
-            <a href="/facebook" class="bg-blue-600 px-8 py-3 rounded-full font-bold hover:bg-blue-700 flex items-center gap-2">
+            <a href="/facebook" class="bg-blue-600 px-8 py-3 rounded-xl font-bold hover:bg-blue-700 hover:scale-105 transition flex items-center gap-2 shadow-lg shadow-blue-500/20">
                 <i class="fab fa-facebook"></i> Facebook Tool
             </a>
-            <a href="/contact" class="border border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-black transition">Let's Talk</a>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 px-6 max-w-6xl mx-auto">
-        <h3 class="text-3xl font-bold mb-12 text-center">Our Featured <span class="tiktok-pink">Tools</span></h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Project 1 -->
-            <a href="/tiktok" class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center block">
-                <div class="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                    <i class="fab fa-tiktok tiktok-cyan text-xl"></i>
+    <!-- Members Section -->
+    <section id="about" class="py-20 px-6 max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+            <h3 class="text-3xl font-bold mb-4">Meet <span class="tiktok-cyan">Our Team</span></h3>
+            <p class="text-gray-400">Team Bandaheali mein 2 members hain jo is platform ko behtar banane ke liye kaam karte hain.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto">
+            <!-- Member 1: Mr Shaban -->
+            <div class="bg-zinc-900/50 p-8 rounded-3xl border border-gray-800 text-center card">
+                <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-cyan-500 p-1">
+                    <img src="https://bandaheali-cdn.koyeb.app/bandaheali/profile.jpg" alt="Mr Shaban" class="w-full h-full object-cover rounded-full">
                 </div>
-                <h4 class="text-xl font-bold mb-2">TikTok Downloader</h4>
-                <p class="text-gray-400 text-sm">Download TikTok videos in HD without watermarks using our fast API.</p>
-            </a>
-            <!-- Project 2 -->
-            <a href="/facebook" class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center block">
-                <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                    <i class="fab fa-facebook text-blue-500 text-xl"></i>
+                <h4 class="text-2xl font-bold mb-1">Mr Shaban</h4>
+                <p class="text-cyan-400 font-medium mb-4 italic">Bandaheali</p>
+                <p class="text-gray-500 text-sm">Lead Developer and Designer of Team Bandaheali projects.</p>
+            </div>
+
+            <!-- Member 2: Rashid -->
+            <div class="bg-zinc-900/50 p-8 rounded-3xl border border-gray-800 text-center card">
+                <div class="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-pink-500 p-1">
+                    <img src="https://bandaheali-cdn.koyeb.app/bandaheali/team.jpg" alt="Rashid" class="w-full h-full object-cover rounded-full">
                 </div>
-                <h4 class="text-xl font-bold mb-2">Facebook Downloader</h4>
-                <p class="text-gray-400 text-sm">Easily download Facebook videos in HD and SD quality directly.</p>
-            </a>
-            <!-- Project 3 -->
-            <div class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center">
-                <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                    <i class="fas fa-code text-purple-400 text-xl"></i>
-                </div>
-                <h4 class="text-xl font-bold mb-2">Node.js API</h4>
-                <p class="text-gray-400 text-sm">High-performance REST APIs built for global scaling and speed.</p>
+                <h4 class="text-2xl font-bold mb-1">Rashid</h4>
+                <p class="text-pink-500 font-medium mb-4 italic">Team Member</p>
+                <p class="text-gray-500 text-sm">Expert in API integrations and quality assurance backend management.</p>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-10 border-t border-gray-800 text-center">
-        <p class="text-gray-500 text-sm mb-4">Follow us on social media for updates</p>
-        <div class="flex justify-center gap-6 mb-6">
-            <a href="#" class="text-2xl hover:text-[#00f2ea]"><i class="fab fa-github"></i></a>
-            <a href="#" class="text-2xl hover:text-[#ff0050]"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-2xl hover:text-[#00f2ea]"><i class="fab fa-twitter"></i></a>
+    <!-- Tools Grid -->
+    <section id="tools" class="py-20 px-6 max-w-6xl mx-auto border-t border-gray-900">
+        <h3 class="text-3xl font-bold mb-12 text-center">Available <span class="tiktok-pink">Tools</span></h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <a href="/tiktok" class="bg-zinc-900/40 p-10 rounded-3xl border border-gray-800 hover:border-pink-500 transition-all group">
+                <i class="fab fa-tiktok text-4xl mb-6 tiktok-cyan group-hover:scale-110 transition"></i>
+                <h4 class="text-2xl font-bold mb-3">TikTok Downloader</h4>
+                <p class="text-gray-500">Download videos without watermark instantly.</p>
+            </a>
+            <a href="/facebook" class="bg-zinc-900/40 p-10 rounded-3xl border border-gray-800 hover:border-blue-500 transition-all group">
+                <i class="fab fa-facebook text-4xl mb-6 text-blue-500 group-hover:scale-110 transition"></i>
+                <h4 class="text-2xl font-bold mb-3">Facebook Downloader</h4>
+                <p class="text-gray-500">Fast and secure FB video downloads in HD.</p>
+            </a>
         </div>
-        <p class="text-gray-600">&copy; 2026 Team-Bandaheali. All Rights Reserved.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800 text-center bg-black">
+        <div class="mb-8">
+            <img src="https://bandaheali-cdn.koyeb.app/bandaheali/team.jpg" alt="Logo" class="w-12 h-12 rounded-full mx-auto border border-gray-700">
+            <p class="mt-4 font-bold text-xl gradient-text tracking-widest">TEAM BANDAHEALI</p>
+        </div>
+        <p class="text-gray-600 px-4">&copy; 2026 Team-Bandaheali. ALLAH Aap Sab Ko Neiki De. Ameen.</p>
     </footer>
 
 </body>
