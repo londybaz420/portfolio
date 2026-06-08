@@ -48,11 +48,11 @@
             <p class="text-sm text-gray-400 mb-4">By: <span id="authorName" class="text-[#69C9D0]"></span></p>
             
             <div class="space-y-3">
-                <a id="noWatermarkBtn" href="#" target="_blank" 
+                <button id="noWatermarkBtn" 
                     class="block text-center w-full bg-green-600 p-3 rounded-lg font-semibold hover:bg-green-700 transition">
                     Download (No Watermark)
-                </a>
-                <a id="musicBtn" href="#" target="_blank" 
+                </button>
+                <button id="musicBtn" 
                     class="block text-center w-full bg-gray-700 p-3 rounded-lg font-semibold hover:bg-gray-600 transition text-sm">
                     Download MP3 (Music)
                 </a>
@@ -65,6 +65,37 @@
     </div>
 
     <script>
+        let currentVideoUrl = "";
+        let currentMusicUrl = "";
+
+        async function triggerDownload(url, filename) {
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(a);
+            } catch (err) {
+                console.error("Download failed:", err);
+                // Fallback to opening in new tab if blob fetch fails (CORS issue)
+                window.open(url, '_blank');
+            }
+        }
+
+        document.getElementById('noWatermarkBtn').addEventListener('click', () => {
+            if (currentVideoUrl) triggerDownload(currentVideoUrl, 'tiktok-video.mp4');
+        });
+
+        document.getElementById('musicBtn').addEventListener('click', () => {
+            if (currentMusicUrl) triggerDownload(currentMusicUrl, 'tiktok-audio.mp3');
+        });
+
         async function downloadVideo() {
             const urlInput = document.getElementById('urlInput').value.trim();
             const downloadBtn = document.getElementById('downloadBtn');
@@ -95,9 +126,9 @@
                     document.getElementById('videoTitle').innerText = videoData.title || "No Title";
                     document.getElementById('authorName').innerText = videoData.author.nickname;
                     
-                    // Set download links
-                    document.getElementById('noWatermarkBtn').href = videoData.play;
-                    document.getElementById('musicBtn').href = videoData.music;
+                    // Store URLs for download buttons
+                    currentVideoUrl = videoData.play;
+                    currentMusicUrl = videoData.music;
 
                     loader.classList.add('hidden');
                     result.classList.remove('hidden');
