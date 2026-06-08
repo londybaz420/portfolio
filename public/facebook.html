@@ -3,50 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook Video Downloader</title>
+    <title>FB Downloader - Team Bandaheali</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+        }
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .fb-gradient {
+            background: linear-gradient(135deg, #1877f2 0%, #0a4fa1 100%);
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center p-4">
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div class="max-w-md w-full bg-gray-800 p-6 rounded-2xl shadow-2xl mt-10">
-        <h1 class="text-3xl font-bold text-center mb-6 text-blue-500">
-            <i class="fab fa-facebook mr-2"></i>FB Downloader
+    <!-- Header / Branding -->
+    <div class="text-center mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold mb-2 text-white">
+            Team <span class="text-blue-500">Bandaheali</span>
         </h1>
-        
+        <p class="text-slate-400">Premium Facebook Video Downloader</p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="glass w-full max-w-2xl rounded-3xl p-6 md:p-10 shadow-2xl">
+        <div class="flex items-center justify-center mb-8">
+            <div class="fb-gradient p-4 rounded-2xl shadow-lg shadow-blue-500/20">
+                <i class="fab fa-facebook text-4xl text-white"></i>
+            </div>
+        </div>
+
         <div class="space-y-4">
-            <input type="text" id="fbUrl" placeholder="Paste Facebook Video Link here..." 
-                class="w-full p-4 rounded-xl bg-gray-700 border border-gray-600 focus:outline-none focus:border-blue-500 text-white">
+            <div class="relative">
+                <input type="text" id="fbUrl" 
+                    placeholder="Paste Facebook video/reel link here..." 
+                    class="w-full bg-slate-800/50 border border-slate-700 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-white placeholder:text-slate-500">
+            </div>
             
-            <button onclick="downloadVideo()" id="btnText"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition duration-300">
-                Get Download Links
+            <button onclick="downloadVideo()" id="downloadBtn" 
+                class="w-full fb-gradient hover:opacity-90 text-white font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 group shadow-xl">
+                <span>Fetch Video</span>
+                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </button>
         </div>
 
-        <div id="loader" class="hidden mt-6 text-center">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
-            <p class="mt-2 text-gray-400">Fetching video data...</p>
+        <!-- Result Section -->
+        <div id="result" class="hidden mt-10 space-y-6 pt-6 border-t border-slate-700/50">
+            <div class="flex flex-col items-center text-center">
+                <h3 class="text-xl font-semibold mb-4 text-slate-200">Video Found! Select Quality:</h3>
+                <div id="downloadLinks" class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                    <!-- Links will appear here -->
+                </div>
+            </div>
         </div>
 
-        <div id="result" class="hidden mt-8 space-y-4">
-            <p class="text-center font-medium text-gray-300">Choose Quality:</p>
-            <div id="linksContainer" class="flex flex-col gap-3"></div>
+        <!-- Loader -->
+        <div id="loader" class="hidden mt-8 text-center text-blue-400">
+            <i class="fas fa-circle-notch fa-spin text-3xl"></i>
+            <p class="mt-2 text-sm">Processing your link...</p>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-slate-500 text-sm">
+        <p>&copy; 2024 Team Bandaheali. High Speed Downloads.</p>
+    </footer>
 
     <script>
         async function downloadVideo() {
             const url = document.getElementById('fbUrl').value;
+            const btn = document.getElementById('downloadBtn');
             const resultDiv = document.getElementById('result');
-            const linksContainer = document.getElementById('linksContainer');
+            const linksDiv = document.getElementById('downloadLinks');
             const loader = document.getElementById('loader');
 
             if (!url) return alert('Please paste a link first!');
 
+            // UI Reset
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
             loader.classList.remove('hidden');
             resultDiv.classList.add('hidden');
-            linksContainer.innerHTML = '';
+            linksDiv.innerHTML = '';
 
             try {
                 const response = await fetch(`/api/facebook?url=${encodeURIComponent(url)}`);
@@ -55,26 +101,40 @@
                 if (data.status === 'success' && data.results) {
                     data.results.forEach(res => {
                         if (res.url && res.url !== '/') {
-                            const btn = document.createElement('button');
-                            btn.className = "w-full bg-gray-700 hover:bg-gray-600 p-4 rounded-xl flex justify-between items-center transition";
-                            btn.innerHTML = `<span>${res.quality}</span> <i class="fas fa-download"></i>`;
-                            btn.onclick = () => forceDownload(res.url, `fb-video-${res.quality}.mp4`);
-                            linksContainer.appendChild(btn);
+                            const card = document.createElement('button');
+                            card.className = "bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-xl flex items-center justify-between transition-all group";
+                            card.onclick = () => startDownload(res.url, `FB_Video_${res.quality}.mp4`);
+                            
+                            card.innerHTML = `
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-video text-blue-400"></i>
+                                    <span class="font-medium">${res.quality}</span>
+                                </div>
+                                <i class="fas fa-download text-slate-500 group-hover:text-white"></i>
+                            `;
+                            linksDiv.appendChild(card);
                         }
                     });
                     resultDiv.classList.remove('hidden');
                 } else {
-                    alert('Could not find video data. Make sure link is public.');
+                    alert('Could not fetch video. Please check the URL.');
                 }
             } catch (err) {
-                alert('Error connecting to server');
+                alert('Connection error. Try again.');
+                console.error(err);
             } finally {
+                btn.disabled = false;
+                btn.style.opacity = '1';
                 loader.classList.add('hidden');
             }
         }
 
-        async function forceDownload(url, filename) {
+        async function startDownload(url, filename) {
             try {
+                const btn = event.currentTarget;
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+                
                 const response = await fetch(url);
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
@@ -83,8 +143,10 @@
                 a.download = filename;
                 document.body.appendChild(a);
                 a.click();
-                document.body.removeChild(a);
                 window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(a);
+                
+                btn.innerHTML = originalContent;
             } catch (e) {
                 window.open(url, '_blank');
             }
