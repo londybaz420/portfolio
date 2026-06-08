@@ -3,66 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Video Downloader</title>
+    <title>Team Bandaheali - TikTok Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background-color: #010101;
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a, #020617);
             color: white;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
         }
-        .tiktok-gradient {
-            background: linear-gradient(45deg, #69C9D0, #EE1D52);
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .card {
-            background: #121212;
-            border: 1px solid #333;
+        .tiktok-btn {
+            background: linear-gradient(90deg, #ff0050 0%, #00f2ea 100%);
+            transition: all 0.3s ease;
+        }
+        .tiktok-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(255, 0, 80, 0.4);
+        }
+        .loader {
+            border-top-color: #ff0050;
+            animation: spinner 0.8s linear infinite;
+        }
+        @keyframes spinner {
+            to {transform: rotate(360deg);}
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4">
+<body class="flex flex-col items-center justify-start py-10 px-4">
 
-    <div class="w-full max-w-md mt-10 text-center">
-        <h1 class="text-4xl font-bold mb-2">TikTok <span class="text-[#EE1D52]">Downloader</span></h1>
-        <p class="text-gray-400 mb-8">Download TikTok videos without watermark</p>
+    <!-- Header / Branding -->
+    <div class="text-center mb-12 animate-fade-in-down">
+        <h2 class="text-blue-400 font-bold tracking-widest uppercase text-sm mb-2">Developed by Team Bandaheali</h2>
+        <h1 class="text-5xl md:text-6xl font-black mb-4 tracking-tight">
+            TikTok <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#ff0050] to-[#00f2ea]">Video</span> Downloader
+        </h1>
+        <p class="text-gray-400 text-lg max-w-lg mx-auto">Premium quality TikTok video extraction without watermark.</p>
+    </div>
 
-        <div class="flex flex-col gap-4">
-            <input type="text" id="urlInput" placeholder="Paste TikTok video link here..." 
-                class="w-full p-4 rounded-lg bg-[#1e1e1e] border border-gray-700 focus:outline-none focus:border-[#69C9D0] text-white">
+    <!-- Main Tool Card -->
+    <div class="w-full max-w-2xl glass rounded-3xl p-6 md:p-8 shadow-2xl">
+        <div class="space-y-4">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                    <i class="fas fa-link"></i>
+                </div>
+                <input type="text" id="urlInput" placeholder="Paste TikTok Video URL here..." 
+                    class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#ff0050]/50 transition-all text-white placeholder-gray-500">
+            </div>
             
             <button onclick="downloadVideo()" id="downloadBtn" 
-                class="tiktok-gradient w-full p-4 rounded-lg font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-                <i class="fas fa-download"></i> Get Video
+                class="tiktok-btn w-full py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3">
+                <i class="fas fa-magic"></i> Extract Video
             </button>
         </div>
 
-        <div id="loader" class="hidden mt-8">
-            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#69C9D0] mx-auto"></div>
-            <p class="mt-2 text-gray-400">Fetching video details...</p>
+        <!-- Loading State -->
+        <div id="loader" class="hidden mt-12 py-10 text-center">
+            <div class="loader ease-linear rounded-full border-4 border-white/10 h-16 w-16 mb-4 mx-auto"></div>
+            <p class="text-gray-400 animate-pulse">Establishing connection with servers...</p>
         </div>
 
-        <div id="result" class="hidden mt-10 card p-6 rounded-xl text-left">
-            <img id="videoCover" src="" alt="Cover" class="w-full h-48 object-cover rounded-lg mb-4">
-            <h3 id="videoTitle" class="font-bold text-lg mb-2 line-clamp-2"></h3>
-            <p class="text-sm text-gray-400 mb-4">By: <span id="authorName" class="text-[#69C9D0]"></span></p>
-            
-            <div class="space-y-3">
-                <button id="noWatermarkBtn" 
-                    class="block text-center w-full bg-green-600 p-3 rounded-lg font-semibold hover:bg-green-700 transition">
-                    Download (No Watermark)
-                </button>
-                <button id="musicBtn" 
-                    class="block text-center w-full bg-gray-700 p-3 rounded-lg font-semibold hover:bg-gray-600 transition text-sm">
-                    Download MP3 (Music)
-                </button>
+        <!-- Result Display -->
+        <div id="result" class="hidden mt-10 animate-fade-in">
+            <div class="flex flex-col md:flex-row gap-6 p-4 bg-white/5 rounded-2xl border border-white/10">
+                <div class="w-full md:w-48 h-64 md:h-auto relative">
+                    <img id="videoCover" src="" alt="Cover" class="w-full h-full object-cover rounded-xl shadow-lg">
+                    <div class="absolute bottom-2 right-2 bg-black/60 px-2 py-1 rounded text-xs text-white">Preview</div>
+                </div>
+                
+                <div class="flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 id="videoTitle" class="font-bold text-xl mb-2 line-clamp-3 text-white"></h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <div class="h-8 w-8 bg-[#ff0050] rounded-full flex items-center justify-center text-xs">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span id="authorName" class="text-gray-300 font-medium"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button id="noWatermarkBtn" class="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 transition-all hover:scale-[1.02] py-3 rounded-xl font-bold text-white shadow-lg">
+                            <i class="fas fa-video"></i> No Watermark
+                        </button>
+                        <button id="musicBtn" class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 transition-all py-3 rounded-xl font-bold text-white">
+                            <i class="fas fa-music"></i> Save Audio
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="error" class="hidden mt-6 text-red-500 bg-red-500/10 p-4 rounded-lg border border-red-500/20">
-            Failed to fetch video. Please check the URL and try again.
+        <!-- Error State -->
+        <div id="error" class="hidden mt-6 text-red-400 bg-red-500/10 p-4 rounded-xl border border-red-500/20 flex items-center gap-3">
+            <i class="fas fa-exclamation-circle text-xl"></i>
+            <span>Unable to fetch video. Please ensure the link is correct.</span>
         </div>
     </div>
+
+    <!-- Footer Note -->
+    <p class="mt-12 text-gray-500 text-sm">© 2024 Team Bandaheali Tools. All services are free to use.</p>
 
     <script>
         let currentVideoUrl = "";
@@ -70,9 +116,6 @@
 
         async function triggerDownload(url, filename) {
             try {
-                // Since TikTok URLs are usually on different domains, 
-                // direct blob fetch might fail due to CORS. 
-                // We'll try it, and fallback to window.open.
                 const response = await fetch(url);
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
@@ -85,17 +128,16 @@
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
             } catch (err) {
-                console.error("Download failed, using backup method:", err);
                 window.open(url, '_blank');
             }
         }
 
         document.getElementById('noWatermarkBtn').addEventListener('click', () => {
-            if (currentVideoUrl) triggerDownload(currentVideoUrl, 'tiktok-video.mp4');
+            if (currentVideoUrl) triggerDownload(currentVideoUrl, 'Bandaheali-TikTok.mp4');
         });
 
         document.getElementById('musicBtn').addEventListener('click', () => {
-            if (currentMusicUrl) triggerDownload(currentMusicUrl, 'tiktok-audio.mp3');
+            if (currentMusicUrl) triggerDownload(currentMusicUrl, 'Bandaheali-Audio.mp3');
         });
 
         async function downloadVideo() {
@@ -105,40 +147,30 @@
             const result = document.getElementById('result');
             const error = document.getElementById('error');
 
-            if (!urlInput) {
-                alert('Please paste a TikTok URL first!');
-                return;
-            }
+            if (!urlInput) return;
 
-            // Reset UI
             error.classList.add('hidden');
             result.classList.add('hidden');
             loader.classList.remove('hidden');
             downloadBtn.disabled = true;
 
             try {
-                // Fetching from OUR server proxy instead of direct API to avoid CORS issues
                 const response = await fetch(`/api/tiktok?url=${encodeURIComponent(urlInput)}`);
                 const data = await response.json();
 
                 if (data.status === "success" && data.result && data.result.data) {
                     const videoData = data.result.data;
-                    
                     document.getElementById('videoCover').src = videoData.cover;
-                    document.getElementById('videoTitle').innerText = videoData.title || "No Title";
-                    document.getElementById('authorName').innerText = videoData.author.nickname;
-                    
-                    // Store URLs for download buttons
+                    document.getElementById('videoTitle').innerText = videoData.title || "TikTok Video";
+                    document.getElementById('authorName').innerText = "@" + videoData.author.unique_id;
                     currentVideoUrl = videoData.play;
                     currentMusicUrl = videoData.music;
-
                     loader.classList.add('hidden');
                     result.classList.remove('hidden');
                 } else {
-                    throw new Error("Invalid response structure");
+                    throw new Error();
                 }
             } catch (err) {
-                console.error(err);
                 loader.classList.add('hidden');
                 error.classList.remove('hidden');
             } finally {
