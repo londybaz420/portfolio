@@ -23,6 +23,24 @@ app.get('/tiktok', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'tiktok.html'));
 });
 
+// TikTok Proxy API
+app.get('/api/tiktok', async (req, res) => {
+    const videoUrl = req.query.url;
+    if (!videoUrl) {
+        return res.status(400).json({ success: false, message: 'URL is required' });
+    }
+
+    try {
+        const apiUrl = `https://jerrycoder.oggyapi.workers.dev/down/tiktok?url=${encodeURIComponent(videoUrl)}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('TikTok API Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch TikTok data' });
+    }
+});
+
 // Contact Route - Telegram Integration
 app.post('/api/contact', async (req, res) => {
     const { name, email, message } = req.body;
@@ -30,7 +48,7 @@ app.post('/api/contact', async (req, res) => {
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE';
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID || 'YOUR_CHAT_ID_HERE';
 
-    const text = `ð *New Contact Form Submission*\n\n*Name:* ${name}\n*Email:* ${email}\n*Message:* ${message}`;
+    const text = `🚀 *New Contact Form Submission*\n\n*Name:* ${name}\n*Email:* ${email}\n*Message:* ${message}`;
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -56,5 +74,5 @@ app.post('/api/contact', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`ð Team-Bandaheali Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Team-Bandaheali Server running on http://localhost:${PORT}`);
 });

@@ -55,7 +55,7 @@
                 <button id="musicBtn" 
                     class="block text-center w-full bg-gray-700 p-3 rounded-lg font-semibold hover:bg-gray-600 transition text-sm">
                     Download MP3 (Music)
-                </a>
+                </button>
             </div>
         </div>
 
@@ -70,6 +70,9 @@
 
         async function triggerDownload(url, filename) {
             try {
+                // Since TikTok URLs are usually on different domains, 
+                // direct blob fetch might fail due to CORS. 
+                // We'll try it, and fallback to window.open.
                 const response = await fetch(url);
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
@@ -82,8 +85,7 @@
                 window.URL.revokeObjectURL(blobUrl);
                 document.body.removeChild(a);
             } catch (err) {
-                console.error("Download failed:", err);
-                // Fallback to opening in new tab if blob fetch fails (CORS issue)
+                console.error("Download failed, using backup method:", err);
                 window.open(url, '_blank');
             }
         }
@@ -115,8 +117,8 @@
             downloadBtn.disabled = true;
 
             try {
-                const apiUrl = `https://jerrycoder.oggyapi.workers.dev/down/tiktok?url=${encodeURIComponent(urlInput)}`;
-                const response = await fetch(apiUrl);
+                // Fetching from OUR server proxy instead of direct API to avoid CORS issues
+                const response = await fetch(`/api/tiktok?url=${encodeURIComponent(urlInput)}`);
                 const data = await response.json();
 
                 if (data.status === "success" && data.result && data.result.data) {
