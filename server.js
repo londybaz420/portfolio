@@ -19,18 +19,18 @@ app.get('/contact', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'contact.html'));
 });
 
+app.get('/tiktok', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'tiktok.html'));
+});
+
 // Contact Route - Telegram Integration
 app.post('/api/contact', async (req, res) => {
     const { name, email, message } = req.body;
 
-    // IMPORTANT: In production, use environment variables!
-    // Set these in a .env file:
-    // TELEGRAM_BOT_TOKEN=your_token
-    // TELEGRAM_CHAT_ID=your_id
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE';
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID || 'YOUR_CHAT_ID_HERE';
 
-    const text = `🚀 *New Contact Form Submission*\n\n*Name:* ${name}\n*Email:* ${email}\n*Message:* ${message}`;
+    const text = `ð *New Contact Form Submission*\n\n*Name:* ${name}\n*Email:* ${email}\n*Message:* ${message}`;
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -56,5 +56,5 @@ app.post('/api/contact', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Team-Bandaheali Server running on http://localhost:${PORT}`);
+    console.log(`ð Team-Bandaheali Server running on http://localhost:${PORT}`);
 });
