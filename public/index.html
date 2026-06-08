@@ -23,7 +23,7 @@
         <h1 class="text-2xl font-bold tracking-tighter">TEAM <span class="tiktok-cyan">BANDA</span><span class="tiktok-pink">HEALI</span></h1>
         <div class="space-x-6">
             <a href="/" class="hover:text-cyan-400">Home</a>
-            <a href="#projects" class="hover:text-pink-400">Projects</a>
+            <a href="#projects" class="hover:text-pink-400">Tools</a>
             <a href="/contact" class="hover:text-cyan-400">Contact</a>
         </div>
     </nav>
@@ -32,39 +32,44 @@
     <section class="h-[70vh] flex flex-col justify-center items-center text-center px-4">
         <h2 class="text-5xl md:text-7xl font-extrabold mb-4">Crafting Digital <span class="tiktok-cyan">Experiences</span></h2>
         <p class="text-gray-400 text-lg max-w-2xl">We are Team Bandaheali. We specialize in modern web solutions, high-speed tools, and creative digital designs.</p>
-        <div class="mt-8 flex gap-4">
-            <button class="bg-tiktok-gradient px-8 py-3 rounded-full font-bold hover:opacity-90">View Work</button>
-            <a href="/contact" class="border border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-black transition inline-block">Let's Talk</a>
+        <div class="mt-8 flex gap-4 flex-wrap justify-center">
+            <a href="/tiktok" class="bg-tiktok-gradient px-8 py-3 rounded-full font-bold hover:opacity-90 flex items-center gap-2">
+                <i class="fab fa-tiktok"></i> TikTok Tool
+            </a>
+            <a href="/facebook" class="bg-blue-600 px-8 py-3 rounded-full font-bold hover:bg-blue-700 flex items-center gap-2">
+                <i class="fab fa-facebook"></i> Facebook Tool
+            </a>
+            <a href="/contact" class="border border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-black transition">Let's Talk</a>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="py-20 px-6 max-w-6xl mx-auto">
-        <h3 class="text-3xl font-bold mb-12 text-center">Our Featured <span class="tiktok-pink">Projects</span></h3>
+        <h3 class="text-3xl font-bold mb-12 text-center">Our Featured <span class="tiktok-pink">Tools</span></h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Project 1 -->
-            <div class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center">
+            <a href="/tiktok" class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center block">
                 <div class="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                    <i class="fas fa-video tiktok-cyan text-xl"></i>
+                    <i class="fab fa-tiktok tiktok-cyan text-xl"></i>
                 </div>
                 <h4 class="text-xl font-bold mb-2">TikTok Downloader</h4>
-                <p class="text-gray-400 text-sm">Professional tools for downloading TikTok content in HD without watermarks.</p>
-            </div>
+                <p class="text-gray-400 text-sm">Download TikTok videos in HD without watermarks using our fast API.</p>
+            </a>
             <!-- Project 2 -->
-            <div class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center">
-                <div class="w-12 h-12 bg-pink-500/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                    <i class="fas fa-code tiktok-pink text-xl"></i>
+            <a href="/facebook" class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center block">
+                <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                    <i class="fab fa-facebook text-blue-500 text-xl"></i>
                 </div>
-                <h4 class="text-xl font-bold mb-2">Custom APIs</h4>
-                <p class="text-gray-400 text-sm">High-performance REST APIs built with Node.js and Express for global scaling.</p>
-            </div>
+                <h4 class="text-xl font-bold mb-2">Facebook Downloader</h4>
+                <p class="text-gray-400 text-sm">Easily download Facebook videos in HD and SD quality directly.</p>
+            </a>
             <!-- Project 3 -->
             <div class="bg-zinc-900 p-6 rounded-2xl card border border-gray-800 text-center">
                 <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                    <i class="fas fa-paint-brush text-purple-400 text-xl"></i>
+                    <i class="fas fa-code text-purple-400 text-xl"></i>
                 </div>
-                <h4 class="text-xl font-bold mb-2">UI/UX Design</h4>
-                <p class="text-gray-400 text-sm">Modern, dark-themed responsive interfaces optimized for user engagement.</p>
+                <h4 class="text-xl font-bold mb-2">Node.js API</h4>
+                <p class="text-gray-400 text-sm">High-performance REST APIs built for global scaling and speed.</p>
             </div>
         </div>
     </section>
